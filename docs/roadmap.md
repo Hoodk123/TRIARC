@@ -5,9 +5,9 @@ later phases beyond stub interfaces.
 
 ## Phase 0 — Skeleton (½ day)
 **Deliverable:** the container comes up and echoes a routed plan.
-- [ ] `orchestrator/schema.py` — the task schema (pydantic)
-- [ ] `orchestrator/registry.py` — model registry loading `configs/models.yaml`
-- [ ] Constrained-decoding client against Tier 1 (local endpoint)
+- [x] `orchestrator/schema.py` — the task schema (pydantic)
+- [x] `orchestrator/registry.py` — model registry loading `configs/models.yaml`
+- [x] Constrained-decoding client against Tier 1 (local endpoint)
 - [ ] `docker compose up` brings up the app
 
 ## Phase 1 — Route + execute (core loop)  ⟵ THE PRODUCT
@@ -31,7 +31,22 @@ later phases beyond stub interfaces.
 - [ ] Run summary: actual vs all-frontier-baseline cost + savings
 - [ ] A simple visual (terminal table or small web view) for the demo video
 
-## Phase 4 — Packaging & submission
+## Phase 4 — Management UI (web + TUI)
+**Deliverable:** a live dashboard over a running instance, in the browser and in the
+terminal, over one shared API. Needs Phase 1–3 done first — nothing to display before
+then.
+- [ ] `orchestrator/api/` — FastAPI app: REST + WebSocket over run state, telemetry,
+      model registry, and confirmation gates (see architecture.md §8)
+- [ ] Run monitoring & control view — live goal/plan/per-step status, start/cancel a run
+- [ ] Cost & routing telemetry view — per-step tier/endpoint/tokens/cost, escalation
+      history, actual-vs-baseline savings
+- [ ] Model registry editor — view/edit `configs/models.yaml` entries
+- [ ] Confirmation gate inbox — approve/deny pending gates, view egress redaction log
+- [ ] `ui/web/` — React + TypeScript client
+- [ ] `ui/tui/` — Python Textual client
+- [ ] Both clients hit only the management API — no direct filesystem/log reads
+
+## Phase 5 — Packaging & submission
 - [ ] Whole-app container verified runnable from README instructions
 - [ ] `web` MCP server for lookups (optional but nice)
 - [ ] README + docs finalized; MIT LICENSE added
@@ -39,6 +54,8 @@ later phases beyond stub interfaces.
 - [ ] Gemma confirmed as the Tier-2 model (Gemma prize)
 
 ## Cut lines (if time runs short)
-Drop in this order: `web` server → visual polish on the cost view → predictive
-escalation (keep reactive). **Never cut:** the core loop, the security gates, and the
-cost telemetry — those are the three things the submission is judged on.
+Drop in this order: the full Management UI (Phase 4 — Phase 3 already ships a minimal
+terminal table / small web view, which covers the demo) → `web` server → visual polish
+on the cost view → predictive escalation (keep reactive). **Never cut:** the core loop,
+the security gates, and the cost telemetry — those are the three things the submission
+is judged on.

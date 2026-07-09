@@ -1,0 +1,24 @@
+# Model registry (architecture.md #3, docs/amd-fireworks.md).
+# Single source of model access -- no other component knows a model URL or name.
+# cost is illustrative (arbitrary relative units), not real Fireworks pricing.
+
+models:
+  - id: local-router
+    endpoint: ${LOCAL_ENDPOINT}
+    capabilities: [route, extract, code_simple]
+    cost: 0
+    privacy: local
+
+  - id: gemma-coder
+    endpoint: https://api.fireworks.ai/inference/v1
+    model: ${FIREWORKS_GEMMA_MODEL}
+    capabilities: [code_complex, tool_use]
+    cost: 0.2
+    privacy: cloud_ok
+
+  - id: frontier
+    endpoint: https://api.fireworks.ai/inference/v1
+    model: ${FIREWORKS_LARGE_MODEL}
+    capabilities: [synthesis, debug, research]
+    cost: 3.0
+    privacy: cloud_ok

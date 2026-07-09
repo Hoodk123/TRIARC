@@ -184,6 +184,44 @@ models:
 
 ---
 
+## 10. Management UI (web + TUI)
+
+**What it does.** Gives you a live dashboard over a running TRIARC instance — in the
+browser or in the terminal — for the four things an operator actually needs mid-run:
+run monitoring, cost/routing telemetry, model registry config, and confirmation gates.
+
+**How it works.**
+1. `orchestrator/api/` exposes a single **management API** (REST for reads/mutations,
+   WebSocket for live push) over the orchestrator's existing state: run/task status
+   (feature 1), per-step cost log (feature 8), `configs/models.yaml` (feature 9), and
+   pending confirmation gates (feature 7).
+2. Two thin clients consume the same API — no logic lives in either client that isn't
+   already in the orchestrator:
+   - **Web** (`ui/web/`) — a browser dashboard for the same four views, better suited to
+     wide telemetry tables and charts.
+   - **TUI** (`ui/tui/`) — a terminal dashboard for the same four views, for operators
+     working over SSH or who never leave the terminal.
+3. Views:
+   - **Run monitoring & control** — live goal → plan → per-step status; start/cancel a
+     run.
+   - **Cost & routing telemetry** — per-step tier/endpoint/tokens/cost, escalation
+     history, actual-vs-baseline savings (the feature-8 numbers, rendered).
+   - **Model registry editor** — view/edit registry entries (endpoint, capabilities,
+     cost, privacy) without hand-editing YAML.
+   - **Confirmation gate inbox** — approve/deny pending irreversible actions; view the
+     egress redaction log.
+
+**Why it matters.** The routing and escalation story (features 2–3) and the cost win
+(feature 8) are only compelling if you can actually see them happen, live, without
+tailing raw logs. The gate inbox also gives face 3 of the security plane (security.md) a
+real UI instead of a blocking terminal prompt.
+
+**Tiers used.** None — this is a pure UI/API layer over existing orchestrator state, not
+a model consumer. It must not gain its own routing or gate-bypass logic; see
+architecture.md §8.
+
+---
+
 ## Feature-to-tier summary
 
 | Feature | Primary tier | Notes |
@@ -197,3 +235,4 @@ models:
 | Security plane | every hop | egress / ingress / gates |
 | Cost telemetry | orchestrator | the demo money-shot |
 | Model registry | orchestrator | backend-agnostic |
+| Management UI (web + TUI) | none (UI/API layer) | thin clients over one management API |

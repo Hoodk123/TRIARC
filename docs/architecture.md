@@ -17,6 +17,7 @@ Layers, top to bottom:
 3. **Model registry** — pluggable OpenAI-compatible endpoints in three tiers
 4. **Tool layer** — everything is an MCP server
 5. **Workspace** — sandboxed project directory + run/telemetry logs
+6. **Management interface** — API + web + TUI clients for operators (§8)
 
 ## 2. The model layer: one router, three tiers
 
@@ -83,7 +84,28 @@ Adopt MCP outright; do not invent a plugin format. First-party servers:
   revive the from-scratch orchestrator adapter — routing-quality training data, exactly
   as Phase 4 of the original roadmap intended.
 
-## 7. Invariants (checked in review)
+## 8. Management interface (API + web + TUI)
+
+A read/control layer over orchestrator state, for operators watching or steering a run.
+It is not a sixth model role and must not accrete one: it displays and forwards, it never
+decides.
+
+- **Management API** (`orchestrator/api/`) — the single source of truth for both clients.
+  REST for reads and mutations, WebSocket for live push. Surfaces exactly four things,
+  each already owned by an existing layer: run/task status (§4 task schema), the
+  per-step cost log (§6 run log), `configs/models.yaml` (§3 registry), and pending
+  confirmation gates (security.md face 3).
+- **Web client** (`ui/web/`) and **TUI client** (`ui/tui/`) — both thin clients over the
+  same API; neither embeds logic the API doesn't already expose. A view or control
+  available in one must be reachable through the same API call in the other — the API is
+  the contract, not either UI.
+- **Mutations stay inside existing gates.** "Approve a confirmation gate" or "cancel a
+  run" through the API resolves to the exact same code path a direct call would use.
+  The API is not a bypass; see the invariant below.
+
+See [features.md §10](features.md) for the view-level spec.
+
+## 9. Invariants (checked in review)
 
 - No component other than the registry knows a model URL or name.
 - No tool exists that can modify security policy or confirmation-gate behavior.
@@ -91,3 +113,5 @@ Adopt MCP outright; do not invent a plugin format. First-party servers:
 - Every irreversible action passes a confirmation gate.
 - Every payload to a Tier-3 endpoint passes the egress gatekeeper.
 - Every external content path is wrapped as untrusted before entering a model.
+- The management API performs no routing, gating, or cost decisions of its own — it
+  reads orchestrator state and forwards mutations through existing gated paths only.

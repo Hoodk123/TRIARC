@@ -113,7 +113,11 @@ triarc/
 │   ├── amd-fireworks.md       # AMD + Fireworks deployment notes
 │   └── roadmap.md             # build phases in dependency order
 ├── orchestrator/              # registry, router loop, MCP client, task schema
-│   └── servers/               # first-party MCP servers (code-sandbox, git, web)
+│   ├── servers/                # first-party MCP servers (code-sandbox, git, web)
+│   └── api/                    # management API: REST + WebSocket (Phase 4)
+├── ui/
+│   ├── web/                    # React + TypeScript management dashboard (Phase 4)
+│   └── tui/                    # Python Textual management dashboard (Phase 4)
 ├── configs/                   # model registry, MCP servers, policies (YAML)
 └── docker/                    # container definitions
 ```
