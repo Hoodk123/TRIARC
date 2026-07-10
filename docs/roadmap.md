@@ -47,11 +47,16 @@ then.
 - [x] Both clients hit only the management API — no direct filesystem/log reads
 
 ## Phase 5 — Packaging & submission
-- [ ] Whole-app container verified runnable from README instructions
-- [ ] `web` MCP server for lookups (optional but nice)
-- [ ] README + docs finalized; MIT LICENSE added
-- [ ] Cover image (routing diagram), demo video, slides
-- [ ] Gemma confirmed as the Tier-2 model (Gemma prize)
+- [x] Whole-app container verified runnable from README instructions
+- [x] `web` MCP server for lookups (optional but nice)
+- [x] README + docs finalized; MIT LICENSE added
+- [x] Cover image (routing diagram) -- demo video and slides are out of a coding
+      agent's scope (need actual screen recording / presentation authoring); left
+      for the submitter
+- [x] Gemma confirmed as the Tier-2 model (Gemma prize) -- `configs/models.yaml`'s
+      `gemma-coder` entry (tier 2) is the only endpoint the registry will ever route
+      `code_complex`/`tool_use` to; exact Fireworks model slug still needs to be
+      filled into `FIREWORKS_GEMMA_MODEL` against a live account before submitting
 
 ## Cut lines (if time runs short)
 Drop in this order: the full Management UI (Phase 4 — Phase 3 already ships a minimal

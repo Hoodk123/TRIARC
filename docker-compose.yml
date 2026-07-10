@@ -7,3 +7,8 @@ services:
       - .env
     volumes:
       - ./configs:/app/configs:ro
+      - ./workspace:/app/workspace
+    environment:
+      - TRIARC_WORKSPACE=/app/workspace
+    ports:
+      - "8080:8080"

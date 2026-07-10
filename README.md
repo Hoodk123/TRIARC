@@ -1,5 +1,7 @@
 # TRIARC — The Autonomous AI Developer That Routes Before It Reasons
 
+![TRIARC routing diagram](docs/assets/routing-diagram.svg)
+
 **AMD Developer Hackathon: ACT II — Track 3 (Unicorn Track 🦄)**
 
 TRIARC is an autonomous AI developer that plans, writes, runs, and debugs code by
@@ -80,7 +82,7 @@ Goal in  ──▶  Orchestrator (small model, constrained JSON decode)
 
 ## Quickstart
 
-> Requires an `FIREWORKS_API_KEY` for Tier 2/3. Tier 1 runs against a local
+> Requires a `FIREWORKS_API_KEY` for Tier 2/3. Tier 1 runs against a local
 > OpenAI-compatible endpoint on the AMD GPU pod. TRIARC ships as a single container.
 
 ```bash
@@ -88,15 +90,34 @@ Goal in  ──▶  Orchestrator (small model, constrained JSON decode)
 git clone https://github.com/<you>/triarc.git && cd triarc
 cp .env.example .env            # add FIREWORKS_API_KEY; set local endpoint URL
 
-# 2. run (containerized — the whole app, not just the sandbox)
-docker compose up --build
+# 2. bring up the management API (containerized — the whole app, not just the sandbox)
+docker compose up --build       # serves the API at http://localhost:8080
 
-# 3. give it a goal
-triarc run "add JWT auth to this Flask app and write tests"
+# 3a. give it a goal from the CLI, one-shot
+docker compose exec app triarc run "add JWT auth to this Flask app and write tests" --execute
+
+# 3b. ...or drive it from the management UI instead (see below)
 ```
 
 Backends: any OpenAI-compatible endpoint registered in `configs/models.yaml`
 (local model on AMD hardware for Tier 1; Fireworks AI for Tiers 2–3).
+
+### Management UI
+
+The container only serves the API (`orchestrator/api/`, architecture.md §8); the two
+UI clients run separately, against that same API:
+
+```bash
+# web dashboard
+cd ui/web && npm install && npm run dev       # http://localhost:5173
+
+# terminal dashboard
+pip install -e '.[tui]'
+TRIARC_API_URL=http://localhost:8080 python -m ui.tui.app
+```
+
+Both are thin clients over one API — run monitoring/control, cost & routing
+telemetry, the model registry editor, and the confirmation-gate inbox.
 
 ---
 
@@ -105,6 +126,7 @@ Backends: any OpenAI-compatible endpoint registered in `configs/models.yaml`
 ```
 triarc/
 ├── README.md                  # this file
+├── LICENSE                    # MIT
 ├── docs/
 │   ├── architecture.md        # system design (source of truth)
 │   ├── routing.md             # routing + escalation mechanics
@@ -112,13 +134,16 @@ triarc/
 │   ├── security.md            # three-faced security plane
 │   ├── amd-fireworks.md       # AMD + Fireworks deployment notes
 │   └── roadmap.md             # build phases in dependency order
-├── orchestrator/              # registry, router loop, MCP client, task schema
-│   ├── servers/                # first-party MCP servers (code-sandbox, git, web)
-│   └── api/                    # management API: REST + WebSocket (Phase 4)
+├── orchestrator/              # registry, router loop, task schema, develop loop
+│   ├── security/                # egress gatekeeper, ingress tagging, confirmation gates
+│   ├── servers/                # first-party MCP servers (code-sandbox, git, filesystem, web)
+│   └── api/                    # management API: REST + polling WebSocket (architecture.md §8)
 ├── ui/
-│   ├── web/                    # React + TypeScript management dashboard (Phase 4)
-│   └── tui/                    # Python Textual management dashboard (Phase 4)
+│   ├── web/                    # React + TypeScript management dashboard
+│   └── tui/                    # Python Textual management dashboard
 ├── configs/                   # model registry, MCP servers, policies (YAML)
+├── workspace/                  # the sandboxed project directory a run operates on
+├── tests/                      # pytest suite for orchestrator/, orchestrator/api/, ui/tui/
 └── docker/                    # container definitions
 ```
 

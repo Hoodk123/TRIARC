@@ -1,0 +1,92 @@
+<svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4b4959"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="700" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="450" y="34" text-anchor="middle" font-size="26" font-weight="700" fill="#08060d">TRIARC</text>
+  <text x="450" y="56" text-anchor="middle" font-size="13" fill="#6b6375">routes before it reasons — capability-based routing across three model tiers</text>
+
+  <!-- Security plane wrapper -->
+  <rect x="15" y="128" width="870" height="500" rx="20" fill="none" stroke="#6a3bff" stroke-width="1.5" stroke-dasharray="6 5" opacity="0.55"/>
+  <rect x="55" y="118" width="230" height="24" rx="12" fill="#6a3bff"/>
+  <text x="170" y="134" text-anchor="middle" font-size="11" font-weight="600" fill="#ffffff" letter-spacing="0.4">SECURITY PLANE — every hop</text>
+
+  <!-- Goal pill -->
+  <rect x="350" y="75" width="200" height="44" rx="22" fill="#08060d"/>
+  <text x="450" y="102" text-anchor="middle" font-size="14" font-weight="600" fill="#ffffff">Goal in</text>
+  <line x1="450" y1="119" x2="450" y2="145" stroke="#4b4959" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Orchestrator -->
+  <rect x="300" y="145" width="300" height="64" rx="10" fill="#f2eeff" stroke="#6a3bff" stroke-width="1.5"/>
+  <text x="450" y="171" text-anchor="middle" font-size="14" font-weight="700" fill="#3a1c8a">Orchestrator</text>
+  <text x="450" y="189" text-anchor="middle" font-size="11.5" fill="#4b4959">Tier 1 · constrained JSON decode</text>
+  <text x="450" y="203" text-anchor="middle" font-size="11.5" fill="#4b4959">classify → decompose → emit capability_required</text>
+  <line x1="450" y1="209" x2="450" y2="235" stroke="#4b4959" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Registry -->
+  <rect x="300" y="235" width="300" height="55" rx="10" fill="#f2eeff" stroke="#6a3bff" stroke-width="1.5"/>
+  <text x="450" y="258" text-anchor="middle" font-size="14" font-weight="700" fill="#3a1c8a">Model Registry</text>
+  <text x="450" y="275" text-anchor="middle" font-size="11.5" fill="#4b4959">capability_required → cheapest satisfying endpoint</text>
+
+  <!-- branch lines to tiers -->
+  <line x1="450" y1="290" x2="450" y2="303" stroke="#4b4959" stroke-width="2"/>
+  <line x1="165" y1="303" x2="735" y2="303" stroke="#4b4959" stroke-width="2"/>
+  <line x1="165" y1="303" x2="165" y2="315" stroke="#4b4959" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="450" y1="303" x2="450" y2="315" stroke="#4b4959" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="735" y1="303" x2="735" y2="315" stroke="#4b4959" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Tier 1 -->
+  <rect x="30" y="315" width="270" height="80" rx="10" fill="#e8f7ee" stroke="#1a8f4c" stroke-width="1.5"/>
+  <text x="165" y="339" text-anchor="middle" font-size="13" font-weight="700" fill="#146638">Tier 1 · Local (AMD GPU pod)</text>
+  <text x="165" y="358" text-anchor="middle" font-size="11" fill="#2f5c43">classify · extract · simple edits</text>
+  <text x="165" y="374" text-anchor="middle" font-size="11" fill="#2f5c43">routing</text>
+  <text x="165" y="389" text-anchor="middle" font-size="12" font-weight="700" fill="#146638">free</text>
+
+  <!-- Tier 2 -->
+  <rect x="315" y="315" width="270" height="80" rx="10" fill="#fff6e0" stroke="#b8860b" stroke-width="1.5"/>
+  <text x="450" y="339" text-anchor="middle" font-size="13" font-weight="700" fill="#8a6100">Tier 2 · Fireworks (Gemma)</text>
+  <text x="450" y="358" text-anchor="middle" font-size="11" fill="#6b5417">structured coding</text>
+  <text x="450" y="374" text-anchor="middle" font-size="11" fill="#6b5417">test generation</text>
+  <text x="450" y="389" text-anchor="middle" font-size="12" font-weight="700" fill="#8a6100">low cost</text>
+
+  <!-- Tier 3 -->
+  <rect x="600" y="315" width="270" height="80" rx="10" fill="#fdecea" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="735" y="339" text-anchor="middle" font-size="13" font-weight="700" fill="#8f2a1f">Tier 3 · Fireworks (large)</text>
+  <text x="735" y="358" text-anchor="middle" font-size="11" fill="#6b332b">deep reasoning</text>
+  <text x="735" y="374" text-anchor="middle" font-size="11" fill="#6b332b">multi-file refactors · subtle debug</text>
+  <text x="735" y="389" text-anchor="middle" font-size="12" font-weight="700" fill="#8f2a1f">high cost</text>
+
+  <!-- converge to tool layer -->
+  <line x1="165" y1="395" x2="165" y2="410" stroke="#4b4959" stroke-width="2"/>
+  <line x1="735" y1="395" x2="735" y2="410" stroke="#4b4959" stroke-width="2"/>
+  <line x1="165" y1="410" x2="735" y2="410" stroke="#4b4959" stroke-width="2"/>
+  <line x1="450" y1="410" x2="450" y2="423" stroke="#4b4959" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Tool layer -->
+  <rect x="280" y="423" width="340" height="62" rx="10" fill="#f5f5f7" stroke="#4b4959" stroke-width="1.5"/>
+  <text x="450" y="448" text-anchor="middle" font-size="14" font-weight="700" fill="#08060d">Tool layer (MCP)</text>
+  <text x="450" y="465" text-anchor="middle" font-size="11.5" fill="#4b4959">code-sandbox · git · filesystem · web — results tagged UNTRUSTED</text>
+  <line x1="450" y1="485" x2="450" y2="510" stroke="#4b4959" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Execute loop -->
+  <rect x="260" y="510" width="380" height="86" rx="10" fill="#f2eeff" stroke="#6a3bff" stroke-width="1.5"/>
+  <text x="450" y="535" text-anchor="middle" font-size="14" font-weight="700" fill="#3a1c8a">Execute → run tests → read failures</text>
+  <text x="450" y="553" text-anchor="middle" font-size="11.5" fill="#4b4959">retry, or escalate one tier up on low confidence</text>
+  <text x="450" y="569" text-anchor="middle" font-size="11.5" fill="#4b4959">{confidence, escalation_reason} on every result</text>
+  <path d="M 640 545 C 675 545 675 585 645 585" fill="none" stroke="#6a3bff" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="655" y="600" text-anchor="middle" font-size="10" fill="#6a3bff" font-style="italic">loop</text>
+
+  <line x1="450" y1="596" x2="450" y2="622" stroke="#4b4959" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Result pill -->
+  <rect x="350" y="622" width="200" height="44" rx="22" fill="#08060d"/>
+  <text x="450" y="649" text-anchor="middle" font-size="14" font-weight="600" fill="#ffffff">Working code + cost report</text>
+
+  <!-- Footer caption -->
+  <text x="450" y="685" text-anchor="middle" font-size="11" fill="#6b6375">egress redaction · untrusted-ingress tagging · confirmation gates — enforced at every hop above</text>
+</svg>

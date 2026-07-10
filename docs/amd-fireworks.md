@@ -31,37 +31,42 @@ The whole app ships as a container (an explicit submission requirement — not j
 code sandbox):
 
 ```
+docker-compose.yml         # app service: build + port 8080 + workspace/configs mounts
 docker/
-├── Dockerfile              # the TRIARC app + orchestrator + MCP servers
-├── docker-compose.yml      # app + sandbox runtime
-└── sandbox.Dockerfile      # the rootless code-execution container
+└── Dockerfile              # the TRIARC app: orchestrator + management API
 ```
 
-`docker compose up --build` brings up the app; `.env` supplies `FIREWORKS_API_KEY` and
-the Tier-1 endpoint URL.
+`docker compose up --build` brings up the management API on `:8080`; `.env` supplies
+`FIREWORKS_API_KEY` and the Tier-1 endpoint URL. The code sandbox (docs/security.md)
+runs each step's generated code in a plain `python:3.12-slim` container pulled at
+runtime -- it doesn't need its own image, since it's just an execution target, not
+app code.
 
 ## Config surface
 
 ```yaml
-# configs/models.yaml (illustrative)
+# configs/models.yaml
 models:
   - id: local-router
     endpoint: ${LOCAL_ENDPOINT}          # AMD GPU pod, OpenAI-compatible
     capabilities: [route, extract, code_simple]
     cost: 0
     privacy: local
+    tier: 1
   - id: gemma-coder
     endpoint: https://api.fireworks.ai/inference/v1
     model: ${FIREWORKS_GEMMA_MODEL}
     capabilities: [code_complex, tool_use]
-    cost: low
+    cost: 0.2
     privacy: cloud_ok
+    tier: 2
   - id: frontier
     endpoint: https://api.fireworks.ai/inference/v1
     model: ${FIREWORKS_LARGE_MODEL}
-    capabilities: [synthesis, debug]
-    cost: high
+    capabilities: [synthesis, debug, research]
+    cost: 3.0
     privacy: cloud_ok
+    tier: 3
 ```
 
 ## Judging alignment

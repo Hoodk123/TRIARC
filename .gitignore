@@ -7,3 +7,8 @@ venv/
 dist/
 build/
 .pytest_cache/
+.triarc/
+workspace/*
+!workspace/.gitkeep
+node_modules/
+ui/web/dist/
