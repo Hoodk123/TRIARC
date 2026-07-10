@@ -109,3 +109,12 @@ class EgressGatekeeper:
                     json.dumps({"timestamp": timestamp, "kind": finding.kind, "matched": finding.matched})
                     + "\n"
                 )
+
+
+def read_redaction_log(log_path: str | Path = _DEFAULT_LOG_PATH) -> list[dict]:
+    """Read the local redaction log (docs/security.md Face 1) for the Phase 4
+    confirmation-gate inbox's "view egress redaction log" panel."""
+    path = Path(log_path)
+    if not path.exists():
+        return []
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]

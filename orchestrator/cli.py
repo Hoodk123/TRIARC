@@ -78,5 +78,17 @@ def run(goal: str, execute: bool) -> None:
         print_run_report(run_log, run_log.summary(largest_cost))
 
 
+@cli.command()
+@click.option("--host", default="127.0.0.1", help="Bind address for the management API.")
+@click.option("--port", default=8080, type=int, help="Bind port for the management API.")
+def serve(host: str, port: int) -> None:
+    """Serve the management API (architecture.md #8) for the web/TUI clients."""
+    import uvicorn
+
+    from orchestrator.api.app import create_app
+
+    uvicorn.run(create_app(), host=host, port=port)
+
+
 if __name__ == "__main__":
     cli()

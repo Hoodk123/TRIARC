@@ -35,16 +35,16 @@ later phases beyond stub interfaces.
 **Deliverable:** a live dashboard over a running instance, in the browser and in the
 terminal, over one shared API. Needs Phase 1–3 done first — nothing to display before
 then.
-- [ ] `orchestrator/api/` — FastAPI app: REST + WebSocket over run state, telemetry,
+- [x] `orchestrator/api/` — FastAPI app: REST + WebSocket over run state, telemetry,
       model registry, and confirmation gates (see architecture.md §8)
-- [ ] Run monitoring & control view — live goal/plan/per-step status, start/cancel a run
-- [ ] Cost & routing telemetry view — per-step tier/endpoint/tokens/cost, escalation
+- [x] Run monitoring & control view — live goal/plan/per-step status, start/cancel a run
+- [x] Cost & routing telemetry view — per-step tier/endpoint/tokens/cost, escalation
       history, actual-vs-baseline savings
-- [ ] Model registry editor — view/edit `configs/models.yaml` entries
-- [ ] Confirmation gate inbox — approve/deny pending gates, view egress redaction log
-- [ ] `ui/web/` — React + TypeScript client
-- [ ] `ui/tui/` — Python Textual client
-- [ ] Both clients hit only the management API — no direct filesystem/log reads
+- [x] Model registry editor — view/edit `configs/models.yaml` entries
+- [x] Confirmation gate inbox — approve/deny pending gates, view egress redaction log
+- [x] `ui/web/` — React + TypeScript client
+- [x] `ui/tui/` — Python Textual client
+- [x] Both clients hit only the management API — no direct filesystem/log reads
 
 ## Phase 5 — Packaging & submission
 - [ ] Whole-app container verified runnable from README instructions

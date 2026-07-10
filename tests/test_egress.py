@@ -3,7 +3,7 @@ import json
 import pytest
 
 from orchestrator.schema import Privacy
-from orchestrator.security.egress import EgressGatekeeper, PrivacyConsentError, redact
+from orchestrator.security.egress import EgressGatekeeper, PrivacyConsentError, read_redaction_log, redact
 
 
 def test_redact_masks_known_prefix_api_key():
@@ -85,3 +85,18 @@ def test_gatekeeper_does_not_create_log_file_when_nothing_found(tmp_path):
     gatekeeper.check("scaffold a login route", privacy=Privacy.CLOUD_OK)
 
     assert not log_path.exists()
+
+
+def test_read_redaction_log_returns_entries(tmp_path):
+    log_path = tmp_path / "redaction.log"
+    gatekeeper = EgressGatekeeper(log_path=log_path)
+    gatekeeper.check("email jane.doe@example.com", privacy=Privacy.CLOUD_OK)
+    gatekeeper.check("call 415-555-0132", privacy=Privacy.CLOUD_OK)
+
+    entries = read_redaction_log(log_path)
+
+    assert [entry["kind"] for entry in entries] == ["email", "phone"]
+
+
+def test_read_redaction_log_returns_empty_list_when_missing(tmp_path):
+    assert read_redaction_log(tmp_path / "does-not-exist.log") == []

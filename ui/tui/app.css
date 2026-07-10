@@ -1,0 +1,42 @@
+#start-run-row {
+    height: 3;
+    margin-bottom: 1;
+}
+
+#goal-input {
+    width: 1fr;
+}
+
+#runs-table {
+    height: 8;
+    margin-bottom: 1;
+}
+
+#steps-table {
+    height: 8;
+    margin-bottom: 1;
+}
+
+#telemetry-table {
+    height: 8;
+    margin-bottom: 1;
+}
+
+#registry-table {
+    height: 10;
+    margin-bottom: 1;
+}
+
+#gates-table {
+    height: 10;
+    margin-bottom: 1;
+}
+
+#redaction-log-table {
+    height: 8;
+    margin-top: 1;
+}
+
+#cost-summary {
+    margin-top: 1;
+}
