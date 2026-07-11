@@ -122,7 +122,6 @@ def run_task(input_path: str, output_path: str) -> None:
     for raw in raw_tasks:
         goal = raw["goal"]
         task_id = raw.get("task_id", "")
-        click.echo(f"[debug] processing goal: {goal!r}", err=True)
 
         try:
             task = client.route(goal)  # single classification, goal preserved verbatim
