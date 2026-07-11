@@ -9,6 +9,7 @@ single classification call that loop will build on.
 from __future__ import annotations
 
 import json
+import os
 
 from openai import OpenAI
 
@@ -42,7 +43,9 @@ class Tier1Client:
     """Talks to the Tier-1 local endpoint using JSON-schema-constrained decoding."""
 
     def __init__(self, endpoint: str, model: str = "tier1-router") -> None:
-        self._client = OpenAI(base_url=endpoint, api_key="not-needed")
+        self._client = OpenAI(
+            base_url=endpoint, api_key=os.environ.get("FIREWORKS_API_KEY", "not-needed")
+        )
         self._model = model
 
     def route(self, goal: str) -> Task:
