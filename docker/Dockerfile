@@ -8,7 +8,7 @@ COPY configs ./configs
 
 RUN pip install --no-cache-dir --timeout 120 --retries 5 .
 
-EXPOSE 8080
-
+# No EXPOSE 8080 needed for headless execution scripts
+# Change default to run the agent against the specific challenge paths
 ENTRYPOINT ["triarc"]
-CMD ["serve", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["run-task", "--input", "/input/tasks.json", "--output", "/output/results.json"]

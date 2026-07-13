@@ -1,0 +1,22 @@
+[
+  {
+    "task_id": "task-001",
+    "goal": "Extract the total invoice amount from this text: 'Invoice #4521, subtotal $340.00, tax $27.20, total due $367.20.'"
+  },
+  {
+    "task_id": "task-002",
+    "goal": "Classify the sentiment of this review as positive, negative, or neutral: 'The delivery was late but the product quality exceeded my expectations.'"
+  },
+  {
+    "task_id": "task-003",
+    "goal": "Write a Python function that returns the nth Fibonacci number."
+  },
+  {
+    "task_id": "task-004",
+    "goal": "Summarize this in one sentence: 'The quarterly report showed a 12% increase in revenue driven primarily by international sales, though operating margins declined slightly due to rising logistics costs.'"
+  },
+  {
+    "task_id": "task-005",
+    "goal": "What is the capital of Japan?"
+  }
+]
