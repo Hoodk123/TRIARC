@@ -133,6 +133,41 @@ For iterating on a real coding task with the full plan → execute → test → 
 (sandboxed `pytest` runs, retries, escalation), use the CLI directly against a live
 workspace — this path expects an actual codebase mounted in and a test suite to run,
 so it's a development tool, not what the grading harness exercises:
+---
+
+## How to use (Docker Hub image)
+
+No clone required — pull the published image and run it directly, passing config as
+environment variables:
+
+```bash
+docker pull mahfujrahaman/triarc:latest
+
+docker run -d \
+  --name triarc \
+  -p 8080:8080 \
+  -e LOCAL_ENDPOINT=http://host.docker.internal:8000/v1 \
+  -e FIREWORKS_API_KEY=your_fireworks_api_key \
+  -e FIREWORKS_GEMMA_MODEL=accounts/fireworks/models/gemma-... \
+  -e FIREWORKS_LARGE_MODEL=accounts/fireworks/models/... \
+  -v "$(pwd)/workspace:/app/workspace" \
+  mahfujrahaman/triarc:latest
+```
+
+This serves the management API at `http://localhost:8080`. Drive it the same way as the
+Quickstart above:
+
+```bash
+docker exec triarc triarc run "add JWT auth to this Flask app and write tests" --execute
+```
+
+`LOCAL_ENDPOINT` must be reachable from inside the container —
+`host.docker.internal` resolves to the host on Docker Desktop; on Linux, add
+`--add-host=host.docker.internal:host-gateway` or point it at a network-reachable
+endpoint (e.g. the AMD GPU pod's URL). See [.env.example](.env.example) for the full set
+of variables, and [docs/amd-fireworks.md](docs/amd-fireworks.md) for backend details.
+
+### Management UI
 
 ```bash
 uv run triarc run "add JWT auth to this Flask app and write tests" --execute
