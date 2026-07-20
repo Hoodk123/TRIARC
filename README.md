@@ -29,16 +29,28 @@ shipped code.
 > TRIARC's runtime — at inference time, TRIARC only calls Fireworks AI-hosted models.
 
 ---
+# Tech Stack
+<p> <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/> <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/Fireworks_AI-6C4EF6?style=for-the-badge&logoColor=white"/> <img src="https://img.shields.io/badge/AMD-000000?style=for-the-badge&logo=amd&logoColor=white"/> <img src="https://img.shields.io/badge/MCP_Servers-000000?style=for-the-badge"/> <img src="https://img.shields.io/badge/Multi--Agent_Systems-orange?style=for-the-badge"/> <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black"/> <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white"/> <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white"/> <img src="https://img.shields.io/badge/Textual-000000?style=for-the-badge&logo=python&logoColor=white"/> <img src="https://img.shields.io/badge/pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white"/> <img src="https://img.shields.io/badge/YAML-CB171E?style=for-the-badge&logo=yaml&logoColor=white"/> <img src="https://img.shields.io/badge/lablab.ai-FF6154?style=for-the-badge"/> </p>
 
+- **Orchestrator/backend:** Python, FastAPI-style management API, Docker
+- **Model layer:** Fireworks AI (all three routing tiers), originally scoped for AMD GPU-hosted Tier 1
+- **Agent architecture:** tri-agent (Orchestrator / Agent / Researcher lineage) with MCP tool servers (code-sandbox, git, filesystem, web)
+- **Web dashboard:** React + TypeScript, built with Vite
+- **Terminal dashboard:** Python Textual (TUI)
+- **Testing:** pytest
+- **Config:** YAML-based model registry, MCP servers, and policies
+- **Built during:** AMD Developer Hackathon (lablab.ai) — ACT II, Track 1
+
+---
 ## The problem
-
+ 
 Autonomous coding agents are expensive and brittle. Most push every step — trivial file
 edits, boilerplate, simple lookups — through a large frontier model, burning tokens on
 work a tiny model could do, and they bluff confidently when a task exceeds their reach
 instead of escalating. **Cost scales with ambition, and reliability doesn't.**
-
+ 
 TRIARC's answer is to separate *orchestration* from *reasoning*:
-
+ 
 - A small, fast **orchestrator** does only classification, decomposition, and routing.
   It never attempts open-ended synthesis.
 - For each sub-task it emits a required **capability** (never a model name).
